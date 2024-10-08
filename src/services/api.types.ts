@@ -6,6 +6,18 @@ export interface Product {
     category: string;
     thumbnail: string;
     images: string[];
+    warrantyInformation: string;
+    shippingInformation: string;
+    availabilityStatus: string;
+    reviews: Review[];
+    rating: string;
+  }
+
+  export interface Review {
+    rating: number;
+    comment: string;
+    date: string;
+    reviewerName: string;
   }
   
   export interface ProductsResponse {
