@@ -6,6 +6,7 @@ import {
   ProductsResponse,
   LoginCredentials,
   AuthResponse,
+  Category,
 } from "./api.types";
 import { User } from "@/types/auth.types";
 
@@ -36,7 +37,6 @@ export class ApiService {
   static async getProducts(params: {
     limit?: number;
     skip?: number;
-    category?: string;
     search?: string;
   }): Promise<ProductsResponse> {
     const response = await axiosInstance.get<ProductsResponse>("/products", {
@@ -50,8 +50,10 @@ export class ApiService {
     return response.data;
   }
 
-  static async getCategories(): Promise<string[]> {
-    const response = await axiosInstance.get<string[]>("/products/categories");
+  static async getCategories(): Promise<Category[]> {
+    const response = await axiosInstance.get<Category[]>(
+      "/products/categories"
+    );
     return response.data;
   }
 }

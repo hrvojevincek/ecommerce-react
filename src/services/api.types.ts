@@ -37,4 +37,9 @@ export interface Product {
     refreshToken?: string;
   }
   
+  export interface Category {
+    slug: string;
+    name: string;
+    url: string;
+  }
   
