@@ -14,7 +14,10 @@ export class ApiService {
   static async login(credentials: LoginCredentials): Promise<AuthResponse> {
     const response = await axiosInstance.post<AuthResponse>(
       "/auth/login",
-      credentials
+      {
+        ...credentials,
+        expiresInMins: 30,
+      }
     );
     return response.data;
   }

@@ -1,7 +1,7 @@
-import { useAuth } from "@/contexts/auth-context";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -45,7 +45,9 @@ export function Layout({ children }: LayoutProps) {
       </header>
 
       {/* Main content */}
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow flex items-center justify-center">
+        {children}
+      </main>
 
       {/* Footer */}
       <footer className="border-t">

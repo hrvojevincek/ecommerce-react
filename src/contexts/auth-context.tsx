@@ -20,7 +20,9 @@ interface AuthContextType {
 }
 
 // Initialize context with undefined and proper type
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
 type AuthAction =
   | { type: "SET_LOADING"; payload: boolean }
@@ -65,7 +67,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const checkAuth = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("accessToken");
       if (!token) {
         dispatch({ type: "SET_LOADING", payload: false });
         return;
@@ -86,26 +88,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const authResponse = await ApiService.login({ username, password });
 
-      // Store tokens
-      localStorage.setItem("token", authResponse.token);
-      if (authResponse.refreshToken) {
-        localStorage.setItem("refreshToken", authResponse.refreshToken);
-      }
+      // Store token in localStorage
+      localStorage.setItem("accessToken", authResponse.accessToken);
 
       // Get user profile after successful login
       const userResponse = await ApiService.getCurrentUser();
       dispatch({ type: "SET_USER", payload: userResponse });
 
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       console.error("Login failed:", error);
       throw error;
+    } finally {
+      dispatch({ type: "SET_LOADING", payload: false });
     }
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("accessToken");
     dispatch({ type: "LOGOUT" });
     navigate("/login");
   };
@@ -118,7 +118,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
 
       const response = await ApiService.refreshToken(refreshToken);
-      localStorage.setItem("token", response.token);
+      localStorage.setItem("accessToken", response.accessToken);
       if (response.refreshToken) {
         localStorage.setItem("refreshToken", response.refreshToken);
       }
@@ -143,11 +143,3 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
-};

@@ -6,6 +6,8 @@ export interface User {
   lastName: string;
   image?: string;
   gender?: string;
+  accessToken?: string;
+  refreshToken?: string;
   phone?: string;
 }
 

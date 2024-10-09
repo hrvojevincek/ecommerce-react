@@ -10,7 +10,7 @@ interface FilterOptions {
   sortOrder: "asc" | "desc" | null;
 }
 
-export function useFilteredProducts(initialFilters: FilterOptions) {
+export const useFilteredProducts = (initialFilters: FilterOptions) => {
   const [filters, setFilters] = useState<FilterOptions>(initialFilters);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -88,4 +88,4 @@ export function useFilteredProducts(initialFilters: FilterOptions) {
     handleFilterChange,
     handleSearch,
   };
-}
+};
