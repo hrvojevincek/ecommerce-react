@@ -7,10 +7,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useCategories } from "@/hooks/useApi";
-import { formatCategoryName } from "@/lib/format-category-name";
+
 import { ChevronDownIcon } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
+import { formatCategoryName } from "@/lib/format-category-name";
 
 interface FilterOptions {
   category: string | null;
