@@ -20,7 +20,6 @@ export function useFilteredProducts(initialFilters: FilterOptions) {
     error,
   } = useProductsApi({
     category: filters.category || undefined,
-    limit: 20,
   });
 
   const filteredProducts = useMemo(() => {
