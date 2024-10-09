@@ -1,13 +1,17 @@
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const Search = () => {
+interface SearchProps {
+  onSearch: (searchTerm: string) => void;
+}
+
+const Search: React.FC<SearchProps> = ({ onSearch }) => {
   const [inputValue, setInputValue] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(e.target);
-  };
+  useEffect(() => {
+    onSearch(inputValue);
+  }, [inputValue, onSearch]);
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newValue = e.target.value;
@@ -15,10 +19,7 @@ const Search = () => {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="relative flex flex-1 flex-shrink-0 w-full rounded shadow-sm"
-    >
+    <form className="relative flex flex-1 flex-shrink-0 w-full rounded shadow-sm">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
@@ -30,7 +31,7 @@ const Search = () => {
         id="search"
         placeholder="Search products..."
         value={inputValue}
-        className="w-full border-0 px-10 py-6 text-base md:text-sm overflow-hidden focus-visible:ring-0"
+        className="w-full border-3 px-10 py-6 text-base md:text-sm overflow-hidden focus-visible:ring-0"
       />
     </form>
   );

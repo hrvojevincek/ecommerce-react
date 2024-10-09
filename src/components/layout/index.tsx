@@ -1,6 +1,7 @@
 import { useAuth } from "@/contexts/auth-context";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ShoppingBag } from "lucide-react";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -14,8 +15,8 @@ export function Layout({ children }: LayoutProps) {
       {/* Navigation */}
       <header className="border-b">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/" className="text-xl font-bold">
-            King ICT Ecommerce
+          <Link to="/" className="text-xl font-bold flex items-center">
+            <ShoppingBag className="mr-2" /> King ICT Ecommerce
           </Link>
 
           <nav className="flex items-center gap-4">

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,11 +6,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDownIcon } from "lucide-react";
-import { Label } from "./ui/label";
-import { Checkbox } from "./ui/checkbox";
 import { useCategories } from "@/hooks/useApi";
 import { formatCategoryName } from "@/lib/format-category-name";
+import { ChevronDownIcon } from "lucide-react";
+import { Checkbox } from "./ui/checkbox";
+import { Label } from "./ui/label";
 
 interface FilterOptions {
   category: string | null;
@@ -21,29 +20,21 @@ interface FilterOptions {
 }
 
 interface CategoriesFilterProps {
-  onFilterChange: (filters: FilterOptions) => void;
+  filters: FilterOptions;
+  onFilterChange: (filters: Partial<FilterOptions>) => void;
 }
 
 const CategoriesFilter: React.FC<CategoriesFilterProps> = ({
+  filters,
   onFilterChange,
 }) => {
   const { data: categories, isLoading } = useCategories();
-  const [filters, setFilters] = useState<FilterOptions>({
-    category: null,
-    priceRange: [],
-    sortBy: null,
-    sortOrder: null,
-  });
 
   const handleFilterChange = (
-    name: string,
+    name: keyof FilterOptions,
     value: string | string[] | null
   ) => {
-    setFilters((prev) => {
-      const newFilters = { ...prev, [name]: value };
-      onFilterChange(newFilters);
-      return newFilters;
-    });
+    onFilterChange({ [name]: value });
   };
 
   const handlePriceRangeChange = (range: string) => {
@@ -110,7 +101,7 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({
             Sort Order: {filters.sortOrder || "Default"}
             <ChevronDownIcon className="size-4" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent customHeight="max-h-[8rem]">
+          <DropdownMenuContent>
             <DropdownMenuItem
               onClick={() => handleFilterChange("sortOrder", "desc")}
             >
@@ -130,7 +121,7 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({
             Sort by: {filters.sortBy || "Default"}
             <ChevronDownIcon className="size-4" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent customHeight="max-h-[8rem]">
+          <DropdownMenuContent>
             <DropdownMenuItem
               onClick={() => handleFilterChange("sortBy", "name")}
             >
