@@ -54,6 +54,9 @@ The application follows a component-based architecture, leveraging React's compo
 2. Install dependencies: `npm install`
 3. Start the development server: `npm run dev`
 4. Open `http://localhost:3000` in your browser
+5. Login with the following credenials:
+- username: "emilys",
+- password: "emilyspass",
 
 ## Building for Production
 
