@@ -47,11 +47,15 @@ export function Dashboard() {
           <Search onSearch={handleSearch} />
           {isLoading ? (
             <LoadingSpinner />
-          ) : (
+          ) : paginatedProducts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {paginatedProducts?.map((product) => (
+              {paginatedProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
+            </div>
+          ) : (
+            <div className="text-center py-8">
+              <p className="text-lg text-gray-600">No products found.</p>
             </div>
           )}
         </div>
